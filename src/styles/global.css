@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+/* Base tipográfica estilo Apple */
+@layer base {
+  html, body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+      Inter, Segoe UI, Roboto, Helvetica, Arial, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+}

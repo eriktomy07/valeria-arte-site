@@ -1,0 +1,39 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { obras } from "../../data/obras";
+
+export async function getStaticPaths() {
+  return obras.map((o) => ({ params: { id: o.id }, props: { obra: o } }));
+}
+
+const { obra } = Astro.props;
+const precio = new Intl.NumberFormat("es-UY").format(obra.precioUYU);
+---
+<Layout title={`Obra • ${obra.titulo}`}>
+  <nav class="mb-4">
+    <a href="/" class="text-sm text-slate-600 hover:underline">← Volver</a>
+  </nav>
+
+  <div class="grid gap-6 md:grid-cols-2">
+    <img src={obra.imagen} alt={`Obra ${obra.titulo}`} class="w-full rounded-2xl shadow-lg object-cover" />
+    <section class="space-y-3">
+      <h1 class="text-3xl font-semibold">{obra.titulo}</h1>
+      <p class="text-slate-600">{obra.tecnica} • {obra.medidas} • {obra.ano}</p>
+      <p class="font-medium">{obra.estado} • ${precio} UYU</p>
+
+      {obra.audio && <audio class="w-full" src={obra.audio} preload="metadata" controls></audio>}
+
+      <div class="flex gap-2 pt-2">
+        <a href={`https://wa.me/598TU_NUMERO?text=${encodeURIComponent(`Hola Valeria, me interesa "${obra.titulo}".`)}`}
+           target="_blank" rel="noreferrer"
+           class="inline-flex items-center justify-center px-4 py-2 rounded-full text-sm font-medium bg-blue-500 text-white hover:bg-blue-600">
+          Consultar
+        </a>
+        <a href={`mailto:valeria@tudominio.com?subject=${encodeURIComponent(`Consulta obra ${obra.titulo}`)}`}
+           class="inline-flex items-center justify-center px-4 py-2 rounded-full text-sm font-medium border border-slate-200 text-slate-800 hover:bg-slate-50">
+          Email
+        </a>
+      </div>
+    </section>
+  </div>
+</Layout>

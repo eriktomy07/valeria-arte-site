@@ -1,0 +1,65 @@
+---
+const { obra } = Astro.props;
+const precio = new Intl.NumberFormat("es-UY").format(obra.precioUYU);
+
+const wa = `https://wa.me/598TU_NUMERO?text=${encodeURIComponent(
+  `Hola Valeria, me interesa la obra "${obra.titulo}".`
+)}`;
+const mail = `mailto:valeria@tudominio.com?subject=${encodeURIComponent(
+  `Consulta obra ${obra.titulo}`
+)}`;
+---
+
+<article class="rounded-2xl shadow-lg bg-white hover:shadow-xl transition-shadow overflow-hidden">
+  <div class="relative">
+    <a href={`/obra/${obra.id}`}>
+      <img
+        src={obra.imagen}
+        alt={`Obra ${obra.titulo}`}
+        loading="lazy"
+        class="w-full aspect-[4/3] object-cover"
+      />
+    </a>
+    <div
+      class="absolute inset-0 pointer-events-none opacity-0 hover:opacity-100 transition-opacity
+             bg-gradient-to-t from-black/20 to-transparent"
+    ></div>
+  </div>
+
+  <div class="p-4 space-y-2">
+    <h3 class="text-lg font-semibold tracking-tight">
+      <a href={`/obra/${obra.id}`} class="hover:underline">{obra.titulo}</a>
+    </h3>
+
+    <p class="text-sm text-slate-600">
+      {obra.tecnica} • {obra.medidas} • {obra.ano}
+    </p>
+    <p class="text-sm font-medium">{obra.estado} • ${precio} UYU</p>
+
+    {obra.audio && (
+      <audio class="w-full mt-2" src={obra.audio} preload="metadata" controls></audio>
+    )}
+
+    <div class="flex gap-2 pt-2">
+      <a
+        href={wa}
+        target="_blank"
+        rel="noreferrer"
+        class="inline-flex items-center justify-center px-4 py-2 rounded-full text-sm font-medium
+               bg-blue-500 text-white hover:bg-blue-600 transition-colors
+               focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+      >
+        Consultar
+      </a>
+
+      <a
+        href={mail}
+        class="inline-flex items-center justify-center px-4 py-2 rounded-full text-sm font-medium
+               border border-slate-200 text-slate-800 hover:bg-slate-50 transition-colors
+               focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+      >
+        Email
+      </a>
+    </div>
+  </div>
+</article>

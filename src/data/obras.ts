@@ -8,7 +8,7 @@ export const obras = [
     estado: "Disponible",
     precioUYU: 48000,
     imagen: "/imgs/obra-01.png",
-    audio: "/audio/obra-01.wav", // o .mp3
+    audio: "/audio/obra-01.mp3",
   },
   {
     id: "obra-02",
@@ -19,6 +19,28 @@ export const obras = [
     estado: "Reservado",
     precioUYU: 35000,
     imagen: "/imgs/obra-02.png",
+    audio: null,
+  },
+  {
+    id: "obra-03",
+    titulo: "Horizonte urbano",
+    ano: 2023,
+    tecnica: "Mixta sobre tela",
+    medidas: "80 x 100 cm",
+    estado: "Disponible",
+    precioUYU: 62000,
+    imagen: "/imgs/obra-03.png",
+    audio: "/audio/obra-03.mp3",
+  },
+  {
+    id: "obra-04",
+    titulo: "Bosque interior",
+    ano: 2022,
+    tecnica: "Óleo sobre madera",
+    medidas: "40 x 60 cm",
+    estado: "Vendido",
+    precioUYU: 0,
+    imagen: "/imgs/obra-04.png",
     audio: null,
   },
 ];

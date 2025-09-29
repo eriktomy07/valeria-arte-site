@@ -11,11 +11,13 @@ const colorBadge = esVendido
   ? "bg-amber-100 text-amber-700 border-amber-200"
   : "bg-emerald-100 text-emerald-700 border-emerald-200";
 
-// 👇 reemplazá por datos reales
-const wa = `https://wa.me/+59894746670?text=${encodeURIComponent(
+// ✅ Número fijo de WhatsApp (formato internacional sin + ni 0 inicial)
+const WHATSAPP_NUMBER = "59894746670";
+
+const wa = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
   `Hola Valeria, me interesa la obra "${obra.titulo}".`
 )}`;
-const mail = `mailto:erikspangenberg@gmail.com?subject=${encodeURIComponent(
+const mail = `mailto:erikspangenberg.uy@gmail.com?subject=${encodeURIComponent(
   `Consulta obra ${obra.titulo}`
 )}`;
 ---

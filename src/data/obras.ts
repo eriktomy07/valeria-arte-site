@@ -8,7 +8,7 @@ export const obras = [
     estado: "Disponible",
     precioUYU: 48000,
     imagen: "/imgs/obra-01.png",
-    audio: "/audio/obra-01.mp3",
+    audio: null,
   },
   {
     id: "obra-02",
@@ -30,7 +30,7 @@ export const obras = [
     estado: "Disponible",
     precioUYU: 62000,
     imagen: "/imgs/obra-03.png",
-    audio: "/audio/obra-03.mp3",
+    audio: null,
   },
   {
     id: "obra-04",

@@ -5,31 +5,25 @@ const { title = "Valeria • Arte" } = Astro.props;
 <!doctype html>
 <html lang="es">
   <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>{title}</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
 
-  <!-- SEO -->
-  <meta name="description" content="Obras de Valeria — pintura contemporánea con audio descriptivo y contacto directo." />
-  <link rel="canonical" href="https://valeria-arte-site.vercel.app" />
+    <!-- SEO básico -->
+    <meta name="description" content="Obras de Valeria — pintura contemporánea." />
 
-  <!-- Favicon -->
-  <link rel="icon" href="/favicon.ico" sizes="any" />
-  <link rel="icon" href="/icon.svg" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <!-- Favicon / OG -->
+    <link rel="icon" href="/favicon.ico" />
+    <meta property="og:title" content="Valeria • Arte" />
+    <meta property="og:description" content="Pintura contemporánea. Explorá la serie." />
+    <meta property="og:image" content="/og-cover.jpg" />
 
-  <!-- Open Graph / Twitter (preview cuando compartís el link) -->
-  <meta property="og:title" content="Valeria • Arte" />
-  <meta property="og:description" content="Pintura contemporánea. Explorá la serie con fichas y contacto." />
-  <meta property="og:image" content="/og-cover.jpg" />
-  <meta property="og:url" content="https://valeria-arte-site.vercel.app" />
-  <meta property="og:type" content="website" />
-  <meta name="twitter:card" content="summary_large_image" />
-</head>
-  <body class="min-h-dvh bg-gradient-to-b from-slate-50 to-white text-slate-900">
+    <!-- Script de zoom -->
+    <script src="/zoom.js" defer></script>
+  </head>
+  <body class="bg-gradient-to-b from-slate-50 to-white text-slate-900">
     <header class="sticky top-0 z-10 bg-white/70 backdrop-blur border-b border-slate-200">
       <div class="mx-auto max-w-6xl px-4 py-3 flex items-center gap-3">
-        <div class="h-8 w-8 rounded-xl bg-blue-500"></div>
         <h1 class="text-lg font-semibold tracking-tight">Valeria • Arte</h1>
       </div>
     </header>

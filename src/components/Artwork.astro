@@ -1,29 +1,47 @@
 ---
 const { obra } = Astro.props;
-const precio = new Intl.NumberFormat("es-UY").format(obra.precioUYU);
+const precio = new Intl.NumberFormat("es-UY").format(obra.precioUYU || 0);
 
-const wa = `https://wa.me/598TU_NUMERO?text=${encodeURIComponent(
+const esVendido = obra.estado?.toLowerCase() === "vendido";
+const esReservado = obra.estado?.toLowerCase() === "reservado";
+
+const colorBadge = esVendido
+  ? "bg-rose-100 text-rose-700 border-rose-200"
+  : esReservado
+  ? "bg-amber-100 text-amber-700 border-amber-200"
+  : "bg-emerald-100 text-emerald-700 border-emerald-200";
+
+// 👇 reemplazá por datos reales
+const wa = `https://wa.me/59894746670?text=${encodeURIComponent(
   `Hola Valeria, me interesa la obra "${obra.titulo}".`
 )}`;
-const mail = `mailto:valeria@tudominio.com?subject=${encodeURIComponent(
+const mail = `mailto:erikspangenberg@gmail.com?subject=${encodeURIComponent(
   `Consulta obra ${obra.titulo}`
 )}`;
 ---
 
 <article class="rounded-2xl shadow-lg bg-white hover:shadow-xl transition-shadow overflow-hidden">
   <div class="relative">
-    <a href={`/obra/${obra.id}`}>
+    <!-- Click para zoom -->
+    <button
+      type="button"
+      onclick={`openDialog('dlg-${obra.id}')`}
+      class="block w-full"
+      aria-label={`Ampliar imagen de ${obra.titulo}`}
+    >
       <img
         src={obra.imagen}
         alt={`Obra ${obra.titulo}`}
         loading="lazy"
-        class="w-full aspect-[4/3] object-cover"
+        decoding="async"
+        class="w-full aspect-[4/3] object-cover transition-transform duration-300 hover:scale-[1.02]"
       />
-    </a>
-    <div
-      class="absolute inset-0 pointer-events-none opacity-0 hover:opacity-100 transition-opacity
-             bg-gradient-to-t from-black/20 to-transparent"
-    ></div>
+    </button>
+
+    <!-- Badge -->
+    <span class={`absolute left-3 top-3 border text-xs px-2 py-1 rounded-full ${colorBadge}`}>
+      {obra.estado ?? "Estado"}
+    </span>
   </div>
 
   <div class="p-4 space-y-2">
@@ -34,32 +52,41 @@ const mail = `mailto:valeria@tudominio.com?subject=${encodeURIComponent(
     <p class="text-sm text-slate-600">
       {obra.tecnica} • {obra.medidas} • {obra.ano}
     </p>
-    <p class="text-sm font-medium">{obra.estado} • ${precio} UYU</p>
 
-    <!-- audio removido por ahora {obra.audio && (
-      <audio class="w-full mt-2" src={obra.audio} preload="metadata" controls></audio>
-    )} -->
+    <p class="text-sm font-medium">
+      {esVendido ? "Vendido" : esReservado ? "Reservado" : `\$${precio} UYU`}
+    </p>
 
     <div class="flex gap-2 pt-2">
       <a
         href={wa}
         target="_blank"
         rel="noreferrer"
-        class="inline-flex items-center justify-center px-4 py-2 rounded-full text-sm font-medium
-               bg-blue-500 text-white hover:bg-blue-600 transition-colors
-               focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+        class={`inline-flex items-center justify-center px-4 py-2 rounded-full text-sm font-medium transition-colors
+                ${esVendido ? "bg-slate-200 text-slate-500 cursor-not-allowed" : "bg-blue-500 text-white hover:bg-blue-600"}`}
+        aria-disabled={esVendido}
+        onclick={esVendido ? 'event.preventDefault()' : undefined}
       >
-        Consultar
+        {esVendido ? "No disponible" : "Consultar"}
       </a>
 
       <a
         href={mail}
         class="inline-flex items-center justify-center px-4 py-2 rounded-full text-sm font-medium
-               border border-slate-200 text-slate-800 hover:bg-slate-50 transition-colors
-               focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+               border border-slate-200 text-slate-800 hover:bg-slate-50"
       >
         Email
       </a>
     </div>
   </div>
+
+  <!-- Modal -->
+  <dialog id={`dlg-${obra.id}`} class="backdrop:bg-black/50 rounded-xl p-0">
+    <form method="dialog">
+      <button class="absolute right-3 top-3 z-10 bg-white/90 rounded-full px-3 py-1 text-sm border">
+        Cerrar
+      </button>
+    </form>
+    <img src={obra.imagen} alt={`Obra ${obra.titulo} ampliada`} class="max-w-[90vw] max-h-[85vh] object-contain" />
+  </dialog>
 </article>

@@ -33,7 +33,6 @@ const mail = `mailto:erikspangenberg.uy@gmail.com?subject=${encodeURIComponent(
   </nav>
 
   <div class="grid gap-8 md:grid-cols-2 items-start">
-    <!-- Imagen con botón de zoom -->
     <div class="relative">
       <button
         type="button"
@@ -49,13 +48,11 @@ const mail = `mailto:erikspangenberg.uy@gmail.com?subject=${encodeURIComponent(
         />
       </button>
 
-      <!-- Badge con color por estado (antes estaba fijo) -->
       <span class={`absolute left-3 top-3 border text-xs px-2 py-1 rounded-full ${colorBadge}`}>
         {obra.estado}
       </span>
     </div>
 
-    <!-- Ficha -->
     <section class="space-y-3">
       <h1 class="text-3xl font-semibold">{obra.titulo}</h1>
       <p class="text-slate-600">{obra.tecnica} • {obra.medidas} • {obra.ano}</p>
@@ -86,24 +83,22 @@ const mail = `mailto:erikspangenberg.uy@gmail.com?subject=${encodeURIComponent(
     </section>
   </div>
 
-  <!-- Modal centrado con backdrop + blur -->
+  <!-- Modal centrado con backdrop y blur -->
   <dialog
     id={`dlg-${obra.id}`}
-    class="p-0 border-0 rounded-2xl backdrop:bg-black/60 backdrop:backdrop-blur-sm"
+    class="p-0 border-0 rounded-2xl backdrop:bg-black/60 backdrop:backdrop-blur-sm flex items-center justify-center"
     style="max-width: min(90vw, 1400px);"
   >
-    <form method="dialog">
-      <button class="absolute right-3 top-3 z-10 bg-white/90 rounded-full px-3 py-1 text-sm border">
+    <form method="dialog" class="absolute right-3 top-3">
+      <button class="bg-white/90 rounded-full px-3 py-1 text-sm border">
         Cerrar
       </button>
     </form>
 
-    <div class="grid place-items-center min-w-[60vw] min-h-[60vh]">
-      <img
-        src={obra.imagen}
-        alt={`Obra ${obra.titulo} ampliada`}
-        class="max-w-[90vw] max-h-[85vh] object-contain block"
-      />
-    </div>
+    <img
+      src={obra.imagen}
+      alt={`Obra ${obra.titulo} ampliada`}
+      class="max-w-[90vw] max-h-[85vh] object-contain m-auto"
+    />
   </dialog>
 </Layout>

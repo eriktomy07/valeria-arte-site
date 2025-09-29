@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+/* opcional: utilidades/ajustes mínimos */
+:root { color-scheme: light; }
 /* Base tipográfica estilo Apple */
 @layer base {
   html, body {
@@ -8,4 +10,15 @@
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
+}
+
+/* Oculta los <dialog> mientras no estén abiertos */
+dialog:not([open]) {
+  display: none;
+}
+
+/* (Opcional) estilo de backdrop si no usás clases utilitarias */
+dialog::backdrop {
+  background: rgba(0,0,0,.6);
+  backdrop-filter: blur(4px);
 }

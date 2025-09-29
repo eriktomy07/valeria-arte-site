@@ -1,5 +1,5 @@
 ---
-import "../styles/global.css";
+import "../styles/global.css";   // ⬅️ IMPORTANTE
 const { title = "Valeria • Arte" } = Astro.props;
 ---
 <!doctype html>
@@ -9,19 +9,16 @@ const { title = "Valeria • Arte" } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
 
-    <!-- SEO básico -->
+    <!-- Meta/OG opcional -->
     <meta name="description" content="Obras de Valeria — pintura contemporánea." />
-
-    <!-- Favicon / OG -->
-    <link rel="icon" href="/favicon.ico" />
     <meta property="og:title" content="Valeria • Arte" />
     <meta property="og:description" content="Pintura contemporánea. Explorá la serie." />
     <meta property="og:image" content="/og-cover.jpg" />
 
-    <!-- Script de zoom -->
+    <!-- JS de zoom -->
     <script src="/zoom.js" defer></script>
   </head>
-  <body class="bg-gradient-to-b from-slate-50 to-white text-slate-900">
+  <body class="min-h-dvh bg-gradient-to-b from-slate-50 to-white text-slate-900">
     <header class="sticky top-0 z-10 bg-white/70 backdrop-blur border-b border-slate-200">
       <div class="mx-auto max-w-6xl px-4 py-3 flex items-center gap-3">
         <h1 class="text-lg font-semibold tracking-tight">Valeria • Arte</h1>

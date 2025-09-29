@@ -33,7 +33,7 @@ const mail = `mailto:erikspangenberg.uy@gmail.com?subject=${encodeURIComponent(
   </nav>
 
   <div class="grid gap-8 md:grid-cols-2 items-start">
-    <!-- Imagen con overlay “Ampliar” -->
+    <!-- Imagen con botón overlay “Ampliar” -->
     <div class="relative">
       <img
         src={obra.imagen}
@@ -46,8 +46,7 @@ const mail = `mailto:erikspangenberg.uy@gmail.com?subject=${encodeURIComponent(
         onclick={`openDialog('dlg-${obra.id}')`}
         class="group absolute bottom-4 right-4 inline-flex items-center gap-2 px-3 py-2 rounded-full
                bg-black/60 text-white backdrop-blur-sm hover:bg-black/70
-               focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80
-               transition-colors"
+               focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 transition-colors"
         aria-label="Ampliar imagen"
         title="Ampliar"
       >
@@ -94,22 +93,29 @@ const mail = `mailto:erikspangenberg.uy@gmail.com?subject=${encodeURIComponent(
     </section>
   </div>
 
-  <!-- MODAL centrado -->
+  <!-- MODAL a pantalla completa + centrado -->
   <dialog
     id={`dlg-${obra.id}`}
-    class="relative p-0 border-0 rounded-2xl grid place-items-center
+    class="relative m-0 p-0 border-0 rounded-none w-screen h-screen bg-transparent
+           grid place-items-center
            backdrop:bg-black/60 backdrop:backdrop-blur-sm"
   >
+    <!-- Botón cerrar -->
     <form method="dialog">
-      <button class="absolute right-3 top-3 z-10 bg-white/90 rounded-full px-3 py-1 text-sm border">
+      <button
+        class="absolute right-4 top-4 z-10 bg-white/90 rounded-full px-3 py-1 text-sm border"
+      >
         Cerrar
       </button>
     </form>
 
-    <img
-      src={obra.imagen}
-      alt={`Obra ${obra.titulo} ampliada`}
-      class="max-w-[90vw] max-h-[85vh] object-contain block"
-    />
+    <!-- Contenedor centrado -->
+    <div class="w-full h-full grid place-items-center">
+      <img
+        src={obra.imagen}
+        alt={`Obra ${obra.titulo} ampliada`}
+        class="max-w-[90vw] max-h-[85vh] object-contain block"
+      />
+    </div>
   </dialog>
 </Layout>

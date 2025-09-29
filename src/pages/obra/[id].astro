@@ -12,6 +12,12 @@ const precio = new Intl.NumberFormat("es-UY").format(obra.precioUYU || 0);
 const esVendido = obra.estado?.toLowerCase() === "vendido";
 const esReservado = obra.estado?.toLowerCase() === "reservado";
 
+const colorBadge = esVendido
+  ? "bg-rose-100 text-rose-700 border-rose-200"
+  : esReservado
+  ? "bg-amber-100 text-amber-700 border-amber-200"
+  : "bg-emerald-100 text-emerald-700 border-emerald-200";
+
 const WHATSAPP_NUMBER = "59894746670";
 const wa = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
   `Hola Valeria, me interesa la obra "${obra.titulo}".`
@@ -42,7 +48,9 @@ const mail = `mailto:erikspangenberg.uy@gmail.com?subject=${encodeURIComponent(
           class="w-full rounded-2xl shadow-lg object-cover transition-transform duration-300 group-hover:scale-[1.01]"
         />
       </button>
-      <span class="absolute left-3 top-3 border text-xs px-2 py-1 rounded-full bg-white/90">
+
+      <!-- Badge con color por estado (antes estaba fijo) -->
+      <span class={`absolute left-3 top-3 border text-xs px-2 py-1 rounded-full ${colorBadge}`}>
         {obra.estado}
       </span>
     </div>
@@ -78,10 +86,10 @@ const mail = `mailto:erikspangenberg.uy@gmail.com?subject=${encodeURIComponent(
     </section>
   </div>
 
-  <!-- Modal centrado -->
+  <!-- Modal centrado con backdrop + blur -->
   <dialog
     id={`dlg-${obra.id}`}
-    class="backdrop:bg-black/50 p-0 border-0 rounded-2xl"
+    class="p-0 border-0 rounded-2xl backdrop:bg-black/60 backdrop:backdrop-blur-sm"
     style="max-width: min(90vw, 1400px);"
   >
     <form method="dialog">

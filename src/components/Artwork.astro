@@ -11,9 +11,7 @@ const colorBadge = esVendido
   ? "bg-amber-100 text-amber-700 border-amber-200"
   : "bg-emerald-100 text-emerald-700 border-emerald-200";
 
-// ✅ Número fijo de WhatsApp (formato internacional sin + ni 0 inicial)
 const WHATSAPP_NUMBER = "59894746670";
-
 const wa = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
   `Hola Valeria, me interesa la obra "${obra.titulo}".`
 )}`;
@@ -24,13 +22,7 @@ const mail = `mailto:erikspangenberg.uy@gmail.com?subject=${encodeURIComponent(
 
 <article class="rounded-2xl shadow-lg bg-white hover:shadow-xl transition-shadow overflow-hidden">
   <div class="relative">
-    <!-- Click para zoom -->
-    <button
-      type="button"
-      onclick={`openDialog('dlg-${obra.id}')`}
-      class="block w-full"
-      aria-label={`Ampliar imagen de ${obra.titulo}`}
-    >
+    <a href={`/obra/${obra.id}`} aria-label={`Ver obra ${obra.titulo}`}>
       <img
         src={obra.imagen}
         alt={`Obra ${obra.titulo}`}
@@ -38,9 +30,7 @@ const mail = `mailto:erikspangenberg.uy@gmail.com?subject=${encodeURIComponent(
         decoding="async"
         class="w-full aspect-[4/3] object-cover transition-transform duration-300 hover:scale-[1.02]"
       />
-    </button>
-
-    <!-- Badge -->
+    </a>
     <span class={`absolute left-3 top-3 border text-xs px-2 py-1 rounded-full ${colorBadge}`}>
       {obra.estado ?? "Estado"}
     </span>
@@ -81,14 +71,4 @@ const mail = `mailto:erikspangenberg.uy@gmail.com?subject=${encodeURIComponent(
       </a>
     </div>
   </div>
-
-  <!-- Modal -->
-  <dialog id={`dlg-${obra.id}`} class="backdrop:bg-black/50 rounded-xl p-0">
-    <form method="dialog">
-      <button class="absolute right-3 top-3 z-10 bg-white/90 rounded-full px-3 py-1 text-sm border">
-        Cerrar
-      </button>
-    </form>
-    <img src={obra.imagen} alt={`Obra ${obra.titulo} ampliada`} class="max-w-[90vw] max-h-[85vh] object-contain" />
-  </dialog>
 </article>

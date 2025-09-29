@@ -1,24 +1,21 @@
-// public/zoom.js
 (() => {
   const state = { lastActive: null };
 
-  // Helper global llamado desde onclick en Astro
   window.openDialog = (id) => {
     const dlg = document.getElementById(id);
     if (!dlg || typeof dlg.showModal !== "function") return;
 
-    // Guardar último foco
+    // Guardar foco actual
     state.lastActive = document.activeElement;
-
     dlg.showModal();
 
-    // Cerrar al clickear fuera (backdrop)
+    // Cerrar si clickea fuera
     const onClickBackdrop = (e) => {
       if (e.target === dlg) dlg.close();
     };
     dlg.addEventListener("click", onClickBackdrop);
 
-    // Restaurar foco y limpiar listeners al cerrar
+    // Restaurar foco y limpiar
     dlg.addEventListener(
       "close",
       () => {

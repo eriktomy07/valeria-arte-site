@@ -7,33 +7,95 @@ export async function getStaticPaths() {
 }
 
 const { obra } = Astro.props;
-const precio = new Intl.NumberFormat("es-UY").format(obra.precioUYU);
+const precio = new Intl.NumberFormat("es-UY").format(obra.precioUYU || 0);
+
+const esVendido = obra.estado?.toLowerCase() === "vendido";
+const esReservado = obra.estado?.toLowerCase() === "reservado";
+
+const WHATSAPP_NUMBER = "59894746670";
+const wa = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+  `Hola Valeria, me interesa la obra "${obra.titulo}".`
+)}`;
+const mail = `mailto:erikspangenberg.uy@gmail.com?subject=${encodeURIComponent(
+  `Consulta obra ${obra.titulo}`
+)}`;
 ---
+
 <Layout title={`Obra • ${obra.titulo}`}>
   <nav class="mb-4">
     <a href="/" class="text-sm text-slate-600 hover:underline">← Volver</a>
   </nav>
 
-  <div class="grid gap-6 md:grid-cols-2">
-    <img src={obra.imagen} alt={`Obra ${obra.titulo}`} class="w-full rounded-2xl shadow-lg object-cover" />
+  <div class="grid gap-8 md:grid-cols-2 items-start">
+    <!-- Imagen con botón de zoom -->
+    <div class="relative">
+      <button
+        type="button"
+        onclick={`openDialog('dlg-${obra.id}')`}
+        class="block w-full group"
+        aria-label={`Ampliar imagen de ${obra.titulo}`}
+        title="Ampliar"
+      >
+        <img
+          src={obra.imagen}
+          alt={`Obra ${obra.titulo}`}
+          class="w-full rounded-2xl shadow-lg object-cover transition-transform duration-300 group-hover:scale-[1.01]"
+        />
+      </button>
+      <span class="absolute left-3 top-3 border text-xs px-2 py-1 rounded-full bg-white/90">
+        {obra.estado}
+      </span>
+    </div>
+
+    <!-- Ficha -->
     <section class="space-y-3">
       <h1 class="text-3xl font-semibold">{obra.titulo}</h1>
       <p class="text-slate-600">{obra.tecnica} • {obra.medidas} • {obra.ano}</p>
-      <p class="font-medium">{obra.estado} • ${precio} UYU</p>
-
-      {obra.audio && <audio class="w-full" src={obra.audio} preload="metadata" controls></audio>}
+      <p class="font-medium">
+        {esVendido ? "Vendido" : esReservado ? "Reservado" : `\$${precio} UYU`}
+      </p>
 
       <div class="flex gap-2 pt-2">
-        <a href={`https://wa.me/598TU_NUMERO?text=${encodeURIComponent(`Hola Valeria, me interesa "${obra.titulo}".`)}`}
-           target="_blank" rel="noreferrer"
-           class="inline-flex items-center justify-center px-4 py-2 rounded-full text-sm font-medium bg-blue-500 text-white hover:bg-blue-600">
-          Consultar
+        <a
+          href={wa}
+          target="_blank"
+          rel="noreferrer"
+          class={`inline-flex items-center justify-center px-4 py-2 rounded-full text-sm font-medium transition-colors
+                  ${esVendido ? "bg-slate-200 text-slate-500 cursor-not-allowed" : "bg-blue-500 text-white hover:bg-blue-600"}`}
+          aria-disabled={esVendido}
+          onclick={esVendido ? 'event.preventDefault()' : undefined}
+        >
+          {esVendido ? "No disponible" : "Consultar"}
         </a>
-        <a href={`mailto:valeria@tudominio.com?subject=${encodeURIComponent(`Consulta obra ${obra.titulo}`)}`}
-           class="inline-flex items-center justify-center px-4 py-2 rounded-full text-sm font-medium border border-slate-200 text-slate-800 hover:bg-slate-50">
+        <a
+          href={mail}
+          class="inline-flex items-center justify-center px-4 py-2 rounded-full text-sm font-medium
+                 border border-slate-200 text-slate-800 hover:bg-slate-50"
+        >
           Email
         </a>
       </div>
     </section>
   </div>
+
+  <!-- Modal centrado -->
+  <dialog
+    id={`dlg-${obra.id}`}
+    class="backdrop:bg-black/50 p-0 border-0 rounded-2xl"
+    style="max-width: min(90vw, 1400px);"
+  >
+    <form method="dialog">
+      <button class="absolute right-3 top-3 z-10 bg-white/90 rounded-full px-3 py-1 text-sm border">
+        Cerrar
+      </button>
+    </form>
+
+    <div class="grid place-items-center min-w-[60vw] min-h-[60vh]">
+      <img
+        src={obra.imagen}
+        alt={`Obra ${obra.titulo} ampliada`}
+        class="max-w-[90vw] max-h-[85vh] object-contain block"
+      />
+    </div>
+  </dialog>
 </Layout>
